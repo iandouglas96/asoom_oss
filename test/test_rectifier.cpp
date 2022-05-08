@@ -10,7 +10,7 @@ TEST(ASOOM_rectifier_test, test_init) {
     }, YAML::BadFile
   );
 
-  Rectifier rect(Rectifier::Params(ros::package::getPath("asoom") + "/config/grace_quarters.yaml", 1));
+  Rectifier rect(Rectifier::Params(ros::package::getPath("asoom") + "/config/titan_wide.yaml", 1));
   Eigen::Matrix3d K = rect.getOutputK();
 
   // Sanity check the matrix

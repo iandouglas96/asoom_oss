@@ -72,7 +72,7 @@ TEST(ASOOM_asoom_test, test_pgo_gps_thread) {
 
 TEST(ASOOM_asoom_test, test_stereo_thread) {
   ASOOM a(ASOOM::Params(100, 100, 100, 0.1), PoseGraph::Params(0.1, 0.1, 0.1, 0, true),
-    Rectifier::Params(ros::package::getPath("asoom") + "/config/grace_quarters.yaml", 0.5), 
+    Rectifier::Params(ros::package::getPath("asoom") + "/config/titan_wide.yaml", 0.5), 
     DenseStereo::Params(), Map::Params());
 
   cv::Mat im1 = cv::imread(ros::package::getPath("asoom") + 
