@@ -1,6 +1,6 @@
 # ASOOM: Aerial Semantic Online Ortho-Mapping
 
-~[Demo Image](demo_img.png)
+![Demo Image](demo_img.png)
 
 ## Dependencies
 * OpenCV (Tested with 3.4)
