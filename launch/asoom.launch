@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <node pkg="image_transport" type="republish" name="republish" output="screen" args="compressed in:=/ovc/rgb/image_color out:=/asoom/img"/>
+  <!--node pkg="image_proc" type="image_proc" ns="/ovc/bonus_left/left" name="colorize"/-->
+
+  <node pkg="orbslam3_ros" type="orbslam3_ros_node" name="orbslam3_ros_node" output="screen">
+    <param name="vocab_path" value="/home/ian/Repos/ORB_SLAM3/Vocabulary/ORBvoc.txt"/>
+    <param name="settings_path" value="$(find orbslam3_ros)/config/titan_wide.yaml"/>
+    <param name="show_viz" value="False"/>
+
+    <remap from="~image" to="/asoom/img"/>
+  </node>
+
+  <node pkg="erfnet_pytorch_ros" type="erfnet_ros.py" name="erfnet_ros" output="screen">
+    <param name="model_path" value="$(find erfnet_pytorch_ros)/models/model_generic.pth"/>
+    <param name="gpu" value="True"/>
+
+    <remap from="~image" to="/asoom/keyframe_img"/>
+    <remap from="~label" to="/asoom/sem"/>
+  </node>
+
+  <node pkg="asoom" type="asoom_node" name="asoom" output="screen">
+    <!-- Settings for adjusting perf -->
+    <param name="stereo_use_sgbm" value="False"/>
+    <param name="pose_graph_num_frames_opt" value="30"/>
+    <param name="map_thread_period_ms" value="5000"/>
+    <param name="map_req_point_density" value="50"/>
+
+    <param name="require_imgs" value="True"/>
+    <param name="use_semantics" value="True"/>
+    <param name="use_gps_stamp" value="False"/>
+    <param name="semantic_lut_path" value="$(find asoom)/config/semantic_lut.yaml"/>
+    <param name="pose_graph_fix_scale" value="False"/>
+    <param name="keyframe_dist_thresh_m" value="5"/>
+
+    <param name="rectifier_calib_path" value="$(find asoom)/config/titan_wide.yaml"/>
+    <remap from="~pose" to="/orbslam3_ros_node/pose"/>
+    <remap from="~gps" to="/ublox/fix"/>
+    <!--param name="rectifier_calib_path" value="$(find asoom)/config/aerial_pennov.yaml"/>
+    <remap from="~pose" to="/sfm_pose"/>
+    <remap from="~img" to="/ovc/bonus_left/left/image_color"/>
+    <remap from="~sem" to="/ovc/bonus_left/left/image_label"/-->
+  </node>
+</launch>
