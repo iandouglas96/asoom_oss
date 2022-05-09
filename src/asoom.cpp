@@ -373,15 +373,6 @@ void ASOOM::StereoThread::computeDepths(std::vector<Keyframe>& frames) {
       Rectifier::rectifyImage(frame.getImg(), i1m1, i1m2, rect1);
       Rectifier::rectifyImage(last_frame->getImg(), i2m1, i2m2, rect2);
 
-      static bool have_saved = false;
-      if (!have_saved) {
-        cv::imwrite("img1.jpg", frame.getImg());
-        cv::imwrite("img2.jpg", last_frame->getImg());
-        ROS_INFO_STREAM("1: \n" << frame.getOdomPose().translation() << "\n" << Eigen::Quaterniond(frame.getOdomPose().rotation()).coeffs());
-        ROS_INFO_STREAM("2: \n" << last_frame->getOdomPose().translation() << "\n" << Eigen::Quaterniond(last_frame->getOdomPose().rotation()).coeffs());
-        have_saved = true;
-      }
-
       if (use_semantics_) {
         Rectifier::rectifyImage(frame.getSem(), i1m1, i1m2, sem_rect, true);
         frame.setSem(sem_rect.clone());
