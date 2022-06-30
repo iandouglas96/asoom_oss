@@ -2,6 +2,9 @@
 
 ![Demo Image](demo_img.png)
 
+## Paper
+This software is a portion of the paper _Stronger Together: Air-Ground Robotic Collaboration Using Semantics_, which can be found on [arXiv](https://arxiv.org/abs/2206.14289) and has been accepted to the IEEE Robotics and Automation Letters.  Please cite this work if you find this code useful.
+
 ## Dependencies
 * OpenCV (Tested with 3.4)
 * Eigen (Tested with 3.3)
