@@ -392,6 +392,10 @@ void ASOOMWrapper::publishMap(const ros::Time& time) {
 }
 
 void ASOOMWrapper::publishKeyframeImgs() {
+  if (!use_semantics_ || !require_imgs_) {
+    return;
+  }
+
   const auto keyframes = asoom_.getNewKeyframes();
 
   for (const auto& key : keyframes) {
